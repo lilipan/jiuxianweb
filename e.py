@@ -35,72 +35,91 @@ for line in lines:
     text = res.content
     tree = etree.HTML(text)
     title = tree.xpath("//div[@class='dIntro clearfix']//h2/text()")
-    wine_name = title[0]
+    wine_name = title[0].encode('utf-8')
     nodes1 = tree.xpath("//div[@class='paraTable']//th[@class='bg']/text()")
     nodes2 = tree.xpath("////div[@class='paraTable']//following-sibling::th[2]/text()")
     # print nodes1
     # print nodes2
     dic = dict(zip(nodes1, nodes2))
+    pro_type = ''
+    smell = ''
+    pro_area = ''
+    pro_way = ''
+    wake_time = ''
+    best_time = ''
+    color = ''
+    wine_chateau = ''
+    grape_var = ''
+    taste = ''
+    year = ''
+    level = ''
+    specification = ''
+    food = ''
+    stor_condition = ''
+    net_content = ''
+    degree_of_alcohol = ''
+    cork = ''
+    carton = ''
     for key in dic.keys():
         # print key
         # print dic[key]
         for case in Switch(key):
             if case('产品类型'.decode('utf-8')):
-                pro_type = dic[key]
+                pro_type = dic[key].encode('utf-8')
                 break
             if case('香味'.decode('utf-8')):
-                smell = dic[key]
+                smell = dic[key].encode('utf-8')
                 break
             if case('产区'.decode('utf-8')):
-                pro_area = dic[key]
+                pro_area = dic[key].encode('utf-8')
                 break
             if case('橡木桶陈酿'.decode('utf-8')):
-                pro_way = dic[key]
+                pro_way = dic[key].encode('utf-8')
                 break
             if case('建议醒酒时间'.decode('utf-8')):
-                wake_time = dic[key]
+                wake_time = dic[key].encode('utf-8')
                 break
             if case('最佳饮用期'.decode('utf-8')):
-                best_time = dic[key]
+                best_time = dic[key].encode('utf-8')
                 break
             if case('色泽'.decode('utf-8')):
-                color = dic[key]
+                color = dic[key].encode('utf-8')
                 break
             if case('酒庄'.decode('utf-8')):
-                wine_chateau = dic[key]
+                wine_chateau = dic[key].encode('utf-8')
                 break
             if case('葡萄品种'.decode('utf-8')):
-                grape_var = dic[key]
+                grape_var = dic[key].encode('utf-8')
                 break
             if case('口感'.decode('utf-8')):
-                taste = dic[key]
+                taste = dic[key].encode('utf-8')
                 break
             if case('参考年份'.decode('utf-8')):
-                year = dic[key]
+                year = dic[key].encode('utf-8')
                 break
             if case('等级1'.decode('utf-8')):
-                level = dic[key]
+                level = dic[key].encode('utf-8')
                 break
             if case('规格'.decode('utf-8')):
-                specification = dic[key]
+                specification = dic[key].encode('utf-8')
                 break
             if case('搭配美食'.decode('utf-8')):
-                food = dic[key]
+                food = dic[key].encode('utf-8')
                 break
             if case('储藏条件'.decode('utf-8')):
-                stor_condition = dic[key]
+                stor_condition = dic[key].encode('utf-8')
                 break
             if case('净含量'.decode('utf-8')):
-                net_content = dic[key]
+                net_content = dic[key].encode('utf-8')
                 break
             if case('酒精度'.decode('utf-8')):
-                degree_of_alcohol = dic[key]
+                degree_of_alcohol = dic[key].encode('utf-8')
                 break
             if case('瓶塞'.decode('utf-8')):
-                cork = dic[key]
+                cork = dic[key].encode('utf-8')
                 break
             if case('箱规'.decode('utf-8')):
-                carton = dic[key]
+                carton = dic[key].encode('utf-8')
                 break
 
     try:
@@ -114,6 +133,7 @@ for line in lines:
                     (wine_name, pro_type, smell, pro_area, pro_way, wake_time, best_time, color, wine_chateau,
                      grape_var, taste, year, level, specification, food, stor_condition, net_content, degree_of_alcohol,
                      cork, carton))
+        # cur.execute("insert into grape_wine(wine_name, pro_type) values(%s, %s)", (wine_name, pro_type))
         conn.commit()
         cur.close()
         conn.close()
